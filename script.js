@@ -13,6 +13,8 @@ let userInfo = {
 let playSound = () => new Audio("sounds/click.wav").play()
 
 let hereIam = () => new Audio("sounds/response/hereIam2.mp3").play()
+let yesOfcourse = () =>
+  new Audio("static/sounds/response/yesOfcourse.mp3").play()
 
 voiceIcon.addEventListener("click", (e) => {
   e.preventDefault()
