@@ -106,8 +106,7 @@ async function getapi(url) {
 
   let data = await response.json()
   console.log(data)
-  // moviesContainer.innerHTML = "";
-  // showdata(data);
+ 
   //   console.log(data["rep"])
 
   // botTalk(data["rep"])
