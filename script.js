@@ -119,5 +119,4 @@ function dorachat(message) {
   getapi(url + message).then(function (value) {
     bottalk(value)
   })
-  //   console.log(rep)
 }
