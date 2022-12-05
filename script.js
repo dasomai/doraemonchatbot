@@ -2,12 +2,6 @@ const voiceIcon = document.querySelector(".voiceIcon")
 const doraImage = document.querySelector(".doraImage")
 const container = document.querySelector(".container")
 
-let userInfo = {
-  name: "John Brown",
-  type: "Admin",
-  rep: ""
-}
-
 // const listenMessage = document.querySelector(".listenMessage")
 
 let playSound = () => new Audio("sounds/click.wav").play()
@@ -16,11 +10,26 @@ let hereIam = () => new Audio("sounds/response/hereIam2.mp3").play()
 let yesOfcourse = () => new Audio("sounds/response/yesOfcourse.mp3").play()
 let appear = () => new Audio("sounds/appear.mp3").play()
 
+// create speech to text function
+
+function bottalk(m) {
+  let speech = new SpeechSynthesisUtterance()
+  speech.lang = "en"
+  let voices = []
+  voices = window.speechSynthesis.getVoices()
+  speech.voice = voices[4]
+  speech.pitch = 1
+  speech.volume = 1
+  speech.rate = 1
+  speech.lang = "en-US"
+  speech.text = m
+  window.speechSynthesis.speak(speech)
+}
+
 voiceIcon.addEventListener("click", (e) => {
   e.preventDefault()
   console.log("clicked")
   playSound()
-  userInfo["rep"] = ""
 
   runSpeechRecognition()
 })
@@ -59,25 +68,15 @@ function runSpeechRecognition() {
       confidence * 100 +
       "%"
     output.classList.remove("hide")
-    userInfo["rep"] = transcript
+
+    console.log(transcript)
+    console.log(typeof transcript)
+
     chatbot(transcript)
   }
 
   // start recognition
   recognition.start()
-}
-
-function botTalk(m) {
-  var msg = new SpeechSynthesisUtterance()
-  var voices = window.speechSynthesis.getVoices()
-  msg.voice = voices[10]
-  msg.voiceURI = "native"
-  msg.volume = 1
-  msg.rate = 1
-  msg.pitch = 0.8
-  msg.text = m
-  msg.lang = "en-US"
-  speechSynthesis.speak(msg)
 }
 
 function chatbot(text) {
@@ -111,11 +110,14 @@ async function getapi(url) {
   // showdata(data);
   //   console.log(data["rep"])
 
-  botTalk(data["rep"])
+  // botTalk(data["rep"])
+  return data["rep"]
 }
 
+const url = "https://chatbot.doraemon99.repl.co/dorachat/"
 function dorachat(message) {
-  const url = "https://chatbot.doraemon99.repl.co/dorachat/"
-  getapi(url + message)
+  getapi(url + message).then(function (value) {
+    bottalk(value)
+  })
   //   console.log(rep)
 }
